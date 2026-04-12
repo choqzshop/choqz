@@ -1,13 +1,266 @@
 <!DOCTYPE html>
+<html lang="id">
 <head>
-  <h1>"Mohon maaf, situs kami sedang dalam pembaruan 
-  <h1>untuk meningkatkan pengalaman Anda dan meningkatkan</h1>
-  <h1>kualitas, update 3 hari kami akan segera kembali!"</h1>
-  <h1>mohon maaf atas ketidak nyamanan atas update</h1>
- 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChoqzShop</title>
+
+<style>
+/* --- KODE ASLI KAMU (TETAP UTUH) --- */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #7b0000, #120000);
+  color: white;
+}
+
+header {
+  padding: 20px;
+}
+
+.title-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title-logo img {
+  width: 48px;
+  height: 48px;
+  animation: pulseLogo 1.5s infinite;
+}
+
+@keyframes pulseLogo {
+  0% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(0,255,204,0.7)); }
+  70% { transform: scale(1.1); filter: drop-shadow(0 0 12px rgba(0,255,204,0)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(0,255,204,0)); }
+}
+
+h1 { margin: 0; font-size: 26px; }
+.sub { color: #ddd; }
+.container { padding: 15px; }
+
+.banner-wrapper { padding: 0 15px; }
+.banner-slider { overflow: hidden; border-radius: 15px; position: relative; margin-bottom: 15px; }
+.banner-track { display: flex; transition: transform 0.5s ease; }
+.banner-slide { min-width: 100%; }
+.banner-slide img { width: 100%; height: 160px; object-fit: cover; border-radius: 15px; }
+.banner-dots { position: absolute; bottom: 8px; width: 100%; text-align: center; }
+.banner-dots span { display: inline-block; width: 8px; height: 8px; margin: 3px; background: #bbb; border-radius: 50%; cursor: pointer; }
+.banner-dots span.active { background: red; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.card { display: flex; align-items: center; background: linear-gradient(135deg, rgba(255,0,0,0.3), rgba(0,0,0,0.5)); border-radius: 15px; padding: 10px; cursor: pointer; transition: 0.3s; }
+.card:hover { transform: scale(1.03); }
+.card img { width: 60px; border-radius: 10px; margin-right: 10px; }
+
+.form-box { margin-top: 20px; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 15px; }
+input, select, button { width: 100%; padding: 10px; margin-top: 10px; border-radius: 10px; border: none; }
+button { background: red; color: white; font-weight: bold; cursor: pointer; }
+.total { margin-top: 10px; font-size: 18px; color: #ffcccb; }
+
+.wa-button { position: fixed; bottom: 15px; right: 15px; width: 48px; height: 48px; animation: pulse 1.5s infinite; z-index: 999; }
+.wa-button img { width: 100%; }
+@keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); } 70% { transform: scale(1.08); box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); } 100% { transform: scale(1); } }
+.footer { margin-top: 40px; padding: 20px; background: merah maroon; }
+.footer-text { color: #ccc; margin-bottom: 20px; font-size: 14px; }
+.footer-menu { display: flex; justify-content: space-between; margin-top: 20px; }
+.footer h4 { color: #c6ff00; margin-bottom: 10px; }
+.footer p { margin: 5px 0; color: #ccc; font-size: 14px; }
+
+/* --- TAMBAHAN GAYA UNTUK POP-UP & PEMBAYARAN --- */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 10px; }
+.modal-container { background: #1a0a0a; width: 100%; max-width: 400px; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 0 20px rgba(255,0,0,0.5); }
+.modal-close { position: absolute; top: 10px; right: 15px; background: #ff0000; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; cursor: pointer; z-index: 2100; }
+.modal-banner img { width: 100%; display: block; }
+.modal-info { padding: 20px; text-align: center; }
+.modal-footer { padding: 10px 20px; background: #000; display: flex; align-items: center; gap: 10px; font-size: 13px; }
+
+.payment-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+.payment-item { background: #222; border: 2px solid transparent; border-radius: 10px; padding: 10px; text-align: center; cursor: pointer; transition: 0.3s; }
+.payment-item img { height: 25px; display: block; margin: 0 auto 5px; }
+.payment-item span { font-size: 12px; font-weight: bold; }
+.payment-item.selected { border-color: #ff0000; background: rgba(255, 0, 0, 0.1); }
+</style>
 </head>
+
 <body>
+
+<div id="promoModal" class="modal-overlay">
+  <div class="modal-container">
+    <div class="modal-close" onclick="closePromo()">&times;</div>
+    <div class="modal-banner">
+      <img src="https://iili.io/BWzFX99.th.png" border="0"></a>
+    </div>
+    <div class="modal-info">
+      <h3 style="color:#ffcc00;">INFO PENTING !!</h3>
+      <p style="font-size: 14px; color: #ddd;">Join grup WhatsApp kami untuk info promo & giveaway!</p>
+      <button onclick="window.open('https://wa.me/6283126088118')" style="background:#25D366;">HUBUNGI ADMIN / JOIN GRUP</button>
+    </div>
+    <div class="modal-footer">
+      <input type="checkbox" id="noShowAgain">
+      <label for="noShowAgain">Jangan tampilkan lagi</label>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="title-logo">
+    <img src="https://iili.io/BWzQh74.th.png" alt="BWzQh74.th.png" border="0"></a>
+    <h1>CHOQZ SHOP</h1>
+  </div>
+  <div class="sub">Top Up Game Murah, Aman & Legal</div>
+</header>
+
+<div class="container">
+
+<div class="banner-wrapper">
+  <div class="banner-slider">
+    <div class="banner-track" id="bannerTrack">
+      <div class="banner-slide"><a href="#"><img src="https://iili.io/BMW1N44.jpg" alt="Banner 1"></a></div>
+      <div class="banner-slide"><a href="#"><img src="https://iili.io/BWzrSHP.th.png" alt="BWzrSHP.th.png" border="0"></a></div>
+      <div class="banner-slide"><a href="#"><img src="https://iili.io/BWzQh74.th.png" alt="BWzQh74.th.png" border="0"></a></div>
+    </div>
+    <div class="banner-dots" id="bannerDots">
+      <span onclick="goToSlide(0)"></span><span onclick="goToSlide(1)"></span><span onclick="goToSlide(2)"></span>
+    </div>
+  </div>
+</div>
+
+<h3>Hanya menyediakan!</h3>
+
+<div class="grid">
+  <div class="card" onclick="pilihGame('Free Fire')"><img src="https://iili.io/BEerBpI.md.jpg"><div>Free Fire<br><small>Garena</small></div></div>
+  <div class="card" onclick="pilihGame('Mobile Legends')"><img src="https://iili.io/BEkTlCQ.md.jpg"><div>Mobile Legends<br><small>Moonton</small></div></div>
+  <div class="card" onclick="pilihGame('Genshin Impact')"><img src="https://iili.io/BE8RKu9.md.jpg"><div>Genshin Impact<br><small>HoYoverse</small></div></div>
+  <div class="card" onclick="pilihGame('Honor of Kings')"><img src="https://iili.io/BEk6Bn9.md.jpg"><div>Honor of Kings<br><small>Tencent</small></div></div>
+</div>
+
+<div class="form-box" id="formTopup" style="display:none;">
+<h3 id="namaGame"></h3>
+<input type="text" id="uid" placeholder="Masukkan UID">
+<select id="item" onchange="hitungTotal()"></select>
+
+<h4 style="margin-top:20px; color:#ffcc00;">Pilih Pembayaran:</h4>
+<div class="payment-grid">
+  <div class="payment-item" onclick="pilihBayar('DANA', this)">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/1200px-Logo_dana_blue.svg.png">
+    <span>DANA</span>
+  </div>
+  <div class="payment-item" onclick="pilihBayar('OVO', this)">
+    <img src="https://iili.io/BWosHYB.th.jpg" alt="BWosHYB.th.jpg" border="0"></a>
+    <span>OVO</span>
+  </div>
+  <div class="payment-item" onclick="pilihBayar('GOPAY', this)">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/1200px-Gopay_logo.svg.png">
+    <span>GOPAY</span>
+  </div>
+  <div class="payment-item" onclick="pilihBayar('QRIS', this)">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo_QRIS.svg/1200px-Logo_QRIS.svg.png">
+    <span>QRIS</span>
+  </div>
+</div>
+
+<div class="total" id="total">Total: Rp0</div>
+<button onclick="kirimWA()">ORDER SEKARANG</button>
+</div>
+  
+<div id="notif"></div>
+</div>
+
+<div class="footer">
+  <div class="footer-text">
+    <div>
+      <h4>Layanan</h4>
+    Top up game terlaris, murah, aman legal 100% <br>
+    buka 24 Jam dengan pilihan payment 
+  </div>
+
+  <div class="footer-menu">
+    <div>
+      <h4>Petunjuk Situs</h4>
+      <p>Beranda</p><p>Masukan uid</p><p>Nominal Pembelian</p><p>Metode pembayaran</p><p>Hubungi Kami</p><p>Ulasan</p>
+    </div>
+    <div><h4>Dukungan</h4><p>WhatsApp</p></div>
+  </div>
+
+  <div class="footer-menu">
+    <div><h4>Legalitas</h4><p>Kebijakan Pribadi</p><p>Syarat & Ketentuan</p></div>
+  </div>
+</div>
+
+<script>
+/* SCRIPT MODAL (POP-UP) */
+function closePromo() {
+  if(document.getElementById("noShowAgain").checked) localStorage.setItem("hideChoqzPromo", "true");
+  document.getElementById("promoModal").style.display = "none";
+}
+window.onload = function() {
+  if(localStorage.getItem("hideChoqzPromo") === "true") document.getElementById("promoModal").style.display = "none";
+}
+
+/* SCRIPT PEMBAYARAN BARU */
+let metodeBayar = "";
+function pilihBayar(nama, el) {
+  metodeBayar = nama;
+  document.querySelectorAll('.payment-item').forEach(item => item.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+/* SCRIPT BANNER ASLI KAMU (TIDAK BERUBAH) */
+let indexBanner = 0;
+const trackBanner = document.getElementById("bannerTrack");
+const dotsBanner = document.getElementById("bannerDots").children;
+function showSlide() {
+  trackBanner.style.transform = "translateX(-" + (indexBanner * 100) + "%)";
+  for (let i = 0; i < dotsBanner.length; i++) dotsBanner[i].classList.remove("active");
+  dotsBanner[indexBanner].classList.add("active");
+}
+function nextSlide() { indexBanner = (indexBanner + 1) % 3; showSlide(); }
+function goToSlide(i) { indexBanner = i; showSlide(); }
+setInterval(nextSlide, 3000);
+showSlide();
+
+/* SCRIPT GAME ASLI KAMU (TIDAK BERUBAH) */
+let gameDipilih = "";
+let hargaList = {};
+function pilihGame(game) {
+  gameDipilih = game;
+  document.getElementById("formTopup").style.display = "block";
+  document.getElementById("namaGame").innerText = game;
+  let item = document.getElementById("item");
+  item.innerHTML = "";
+  if (game === "Free Fire") {
+    hargaList = {"Member Mingguan - Rp32.000":32000,"Member Bulanan - Rp92.000":92000,"BP Card -Rp46.000":46000,"5 DM - Rp1.000":1000,"12 DM - Rp2.000":2000,"30 DM - Rp5.800":5800,"50 DM - Rp7.800":7800,"70 DM - Rp10.000":10000,"80 DM - Rp11.600":11600,"100 DM - Rp16.000":16000,"140 DM - Rp19.000":19000,"355 DM - Rp50.000":50000,"720 DM - Rp100.000":100000,"7430 DM - Rp1.000.000":1000000,"73100 DM - Rp10.000.000":10000000};
+  } else if (game === "Mobile Legends") {
+    hargaList = {"86 DM - Rp20.000":20000,"172 DM - Rp38.000":38000};
+  } else {
+    hargaList = {"Paket 1 - Rp10.000":10000};
+  }
+  for (let key in hargaList) {
+    let opt = document.createElement("option");
+    opt.value = key; opt.text = key; item.appendChild(opt);
+  }
+  hitungTotal();
+}
+function hitungTotal() {
+  let item = document.getElementById("item").value;
+  let harga = hargaList[item] || 0;
+  document.getElementById("total").innerText = "Total: Rp" + harga.toLocaleString();
+}
+function kirimWA() {
+  if(!metodeBayar) { alert("Pilih pembayaran dulu bosku!"); return; }
+  let uid = document.getElementById("uid").value;
+  let item = document.getElementById("item").value;
+  let total = document.getElementById("total").innerText;
+  let text = `Halo ChoqzShop!\nSaya ingin top up:\n\nGame: ${gameDipilih}\nUID: ${uid}\nItem: ${item}\n${total}\nPembayaran: ${metodeBayar}`;
+  window.open("https://wa.me/6283126088118?text=" + encodeURIComponent(text));
+}
+</script>
+
+<a href="https://wa.me/62895425390197" target="_blank" class="wa-button">
+  <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png">
+</a>
+
 </body>
-<html>
- 
-</html>
+  </html>
