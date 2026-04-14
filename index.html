@@ -3,264 +3,430 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ChoqzShop</title>
-
+<title>Choqz Shop - Top Up FF & ML</title>
 <style>
-/* --- KODE ASLI KAMU (TETAP UTUH) --- */
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #7b0000, #120000);
-  color: white;
-}
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+  body { background: #0f0f1a; color: #fff; padding: 16px; padding-bottom: 0; }
+.container { max-width: 500px; margin: 0 auto; }
 
-header {
-  padding: 20px;
-}
+.header {
+    text-align: center; margin-bottom: 20px;
+  }
+.logo {
+    width: 80px; height: 80px; border-radius: 20px;
+    object-fit: cover; margin: 0 auto 8px auto; display: block;
+    border: 2px solid #7b2cbf; box-shadow: 0 0 15px rgba(123,44,191,0.4);
+    animation: float 3s ease-in-out infinite;
+    will-change: transform;
+  }
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  h1 { color: #9d4edd; font-size: 24px; }
+.sub { opacity:.7; font-size: 14px; margin-top: 4px; }
 
-.title-logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+.banner {
+    width: 100%; height: 140px; border-radius: 12px;
+    overflow: hidden; margin-bottom: 20px;
+  }
+.banner img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
 
-.title-logo img {
-  width: 48px;
-  height: 48px;
-  animation: pulseLogo 1.5s infinite;
-}
+.pilih-game { margin-bottom: 16px; }
+.judul-section { font-size: 14px; margin-bottom: 10px; opacity:.8; }
+.game-list {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+  }
+.game-item {
+    background: #1a1a2e; border: 2px solid #2a2a4a; border-radius: 12px;
+    padding: 12px; text-align: center; cursor: pointer; transition:.2s;
+  }
+.game-item:hover { border-color: #7b2cbf; }
+.game-item.active { border-color: #9d4edd; background: #7b2cbf; }
+.game-item img {
+    width: 50px; height: 50px; border-radius: 10px;
+    object-fit: cover; margin-bottom: 8px;
+  }
+.game-item div { font-size: 13px; font-weight: bold; }
 
-@keyframes pulseLogo {
-  0% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(0,255,204,0.7)); }
-  70% { transform: scale(1.1); filter: drop-shadow(0 0 12px rgba(0,255,204,0)); }
-  100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(0,255,204,0)); }
-}
+.form { background: #1a1a2e; padding: 16px; border-radius: 12px; margin-bottom: 16px; }
+.form label { display: block; margin-bottom: 6px; font-size: 14px; }
+.form input {
+    width: 100%; padding: 12px; background: #0f0f1a; border: 1px solid #2a2a4a;
+    border-radius: 8px; color: #fff; margin-bottom: 12px;
+  }
 
-h1 { margin: 0; font-size: 26px; }
-.sub { color: #ddd; }
-.container { padding: 15px; }
+.grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 10px; margin-bottom: 16px;
+  }
+.item {
+    background: #1a1a2e; border: 2px solid #2a2a4a; border-radius: 10px;
+    padding: 14px 8px; text-align: center; cursor: pointer; transition:.2s;
+  }
+.item:hover { border-color: #7b2cbf; }
+.item.active { border-color: #9d4edd; background: #7b2cbf; }
+.item.logo-item {
+    width: 36px; height: 36px; margin: 0 auto 6px auto;
+    object-fit: contain; display: block;
+  }
+.item.nominal {
+    font-weight: bold; font-size: 15px;
+    color: #00D9FF; text-shadow: 0 0 8px rgba(0,217,255,0.4);
+  }
+.item.harga { font-size: 13px; opacity:.8; margin-top: 4px; }
+.item.tag {
+    font-size: 10px; background: #9d4edd; color: #fff; padding: 2px 6px;
+    border-radius: 4px; display: inline-block; margin-bottom: 4px;
+  }
 
-.banner-wrapper { padding: 0 15px; }
-.banner-slider { overflow: hidden; border-radius: 15px; position: relative; margin-bottom: 15px; }
-.banner-track { display: flex; transition: transform 0.5s ease; }
-.banner-slide { min-width: 100%; }
-.banner-slide img { width: 100%; height: 160px; object-fit: cover; border-radius: 15px; }
-.banner-dots { position: absolute; bottom: 8px; width: 100%; text-align: center; }
-.banner-dots span { display: inline-block; width: 8px; height: 8px; margin: 3px; background: #bbb; border-radius: 50%; cursor: pointer; }
-.banner-dots span.active { background: red; }
+.metode-bayar { margin-bottom: 16px; }
+.metode-list {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  }
+.metode-item {
+    background: #1a1a2e; border: 2px solid #2a2a4a; border-radius: 10px;
+    padding: 12px; text-align: center; cursor: pointer; transition:.2s;
+  }
+.metode-item:hover { border-color: #7b2cbf; }
+.metode-item.active { border-color: #9d4edd; background: #7b2cbf; }
+.metode-item img { width: 40px; height: 40px; margin-bottom: 6px; object-fit: contain; }
+.metode-item div { font-size: 12px; font-weight: bold; }
 
-.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-.card { display: flex; align-items: center; background: linear-gradient(135deg, rgba(255,0,0,0.3), rgba(0,0,0,0.5)); border-radius: 15px; padding: 10px; cursor: pointer; transition: 0.3s; }
-.card:hover { transform: scale(1.03); }
-.card img { width: 60px; border-radius: 10px; margin-right: 10px; }
+.qris-box {
+    background: #1a1a2e; border: 2px solid #9d4edd; border-radius: 12px;
+    padding: 16px; text-align: center; margin-bottom: 16px;
+    animation: fadeIn.3s ease;
+  }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+.qris-box img {
+    width: 100%; max-width: 280px; border-radius: 8px; margin-bottom: 12px;
+  }
+.qris-box p {
+    font-size: 13px; opacity:.8; line-height: 1.5;
+  }
 
-.form-box { margin-top: 20px; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 15px; }
-input, select, button { width: 100%; padding: 10px; margin-top: 10px; border-radius: 10px; border: none; }
-button { background: red; color: white; font-weight: bold; cursor: pointer; }
-.total { margin-top: 10px; font-size: 18px; color: #ffcccb; }
+.bayar {
+    width: 100%; padding: 16px; background: #25D366; border: none;
+    color: #000; font-weight: bold; border-radius: 10px; font-size: 16px; cursor: pointer;
+  }
+.bayar:disabled { background: #2a2a4a; color: #666; cursor: not-allowed; }
+.hide { display: none; }
 
-.wa-button { position: fixed; bottom: 15px; right: 15px; width: 48px; height: 48px; animation: pulse 1.5s infinite; z-index: 999; }
-.wa-button img { width: 100%; }
-@keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); } 70% { transform: scale(1.08); box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); } 100% { transform: scale(1); } }
-.footer { margin-top: 40px; padding: 20px; background: merah maroon; }
-.footer-text { color: #ccc; margin-bottom: 20px; font-size: 14px; }
-.footer-menu { display: flex; justify-content: space-between; margin-top: 20px; }
-.footer h4 { color: #c6ff00; margin-bottom: 10px; }
-.footer p { margin: 5px 0; color: #ccc; font-size: 14px; }
+.wa-float {
+    position: fixed; bottom: 20px; right: 20px;
+    width: 56px; height: 56px; background: #25D366;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 12px rgba(37,211,102,0.4); z-index: 999;
+    transition:.3s; animation: pulse 2s infinite;
+  }
+.wa-float:hover { transform: scale(1.1); }
+.wa-float img { width: 32px; height: 32px; }
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 4px 12px rgba(37,211,102,0.4); }
+    50% { box-shadow: 0 4px 20px rgba(37,211,102,0.7); }
+  }
 
-/* --- TAMBAHAN GAYA UNTUK POP-UP & PEMBAYARAN --- */
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 10px; }
-.modal-container { background: #1a0a0a; width: 100%; max-width: 400px; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 0 20px rgba(255,0,0,0.5); }
-.modal-close { position: absolute; top: 10px; right: 15px; background: #ff0000; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; cursor: pointer; z-index: 2100; }
-.modal-banner img { width: 100%; display: block; }
-.modal-info { padding: 20px; text-align: center; }
-.modal-footer { padding: 10px 20px; background: #000; display: flex; align-items: center; gap: 10px; font-size: 13px; }
-
-.payment-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
-.payment-item { background: #222; border: 2px solid transparent; border-radius: 10px; padding: 10px; text-align: center; cursor: pointer; transition: 0.3s; }
-.payment-item img { height: 25px; display: block; margin: 0 auto 5px; }
-.payment-item span { font-size: 12px; font-weight: bold; }
-.payment-item.selected { border-color: #ff0000; background: rgba(255, 0, 0, 0.1); }
+footer {
+    background: #1a1a2e; margin: 30px -16px 0 -16px; padding: 24px 16px;
+    border-top: 1px solid #2a2a4a;
+  }
+.footer-group {
+    margin-bottom: 20px;
+  }
+.footer-title {
+    font-size: 13px; font-weight: bold; color: #9d4edd; margin-bottom: 10px;
+  }
+.footer-menu {
+    display: flex; flex-wrap: wrap; gap: 8px 16px;
+  }
+.footer-menu a {
+    color: #fff; opacity:.7; text-decoration: none; font-size: 13px;
+  }
+.footer-menu a:hover { opacity: 1; color: #9d4edd; }
+.copyright {
+    text-align: center; font-size: 12px; opacity:.5;
+    padding-top: 16px; border-top: 1px solid #2a2a4a;
+  }
 </style>
 </head>
-
 <body>
-
-<div id="promoModal" class="modal-overlay">
-  <div class="modal-container">
-    <div class="modal-close" onclick="closePromo()">&times;</div>
-    <div class="modal-banner">
-      <img src="https://iili.io/BWzFX99.th.png" border="0"></a>
-    </div>
-    <div class="modal-info">
-      <h3 style="color:#ffcc00;">INFO PENTING !!</h3>
-      <p style="font-size: 14px; color: #ddd;">Join grup WhatsApp kami untuk info promo & giveaway!</p>
-      <button onclick="window.open('https://wa.me/6283126088118')" style="background:#25D366;">HUBUNGI ADMIN / JOIN GRUP</button>
-    </div>
-    <div class="modal-footer">
-      <input type="checkbox" id="noShowAgain">
-      <label for="noShowAgain">Jangan tampilkan lagi</label>
-    </div>
-  </div>
-</div>
-
-<header>
-  <div class="title-logo">
-    <img src="https://iili.io/BWzQh74.th.png" alt="BWzQh74.th.png" border="0"></a>
-    <h1>CHOQZ SHOP</h1>
-  </div>
-  <div class="sub">Top Up Game Murah, Aman & Legal</div>
-</header>
-
 <div class="container">
+  <div class="header">
+    <img src="https://iili.io/BXo3Fnt.th.jpg" alt="Logo Choqz Shop" class="logo">
+    <h1>CHOQZ SHOP</h1>
+    <div class="sub">Top Up Instan Free Fire & Mobile Legends</div>
+  </div>
 
-<div class="banner-wrapper">
-  <div class="banner-slider">
-    <div class="banner-track" id="bannerTrack">
-      <div class="banner-slide"><a href="#"><img src="https://iili.io/BMW1N44.jpg" alt="Banner 1"></a></div>
-      <div class="banner-slide"><a href="#"><img src="https://iili.io/BWzrSHP.th.png" alt="BWzrSHP.th.png" border="0"></a></div>
-      <div class="banner-slide"><a href="#"><img src="https://iili.io/BWzQh74.th.png" alt="BWzQh74.th.png" border="0"></a></div>
+  <div class="banner" id="banner">
+    <img src="https://cdn.phototourl.com/member/2026-04-13-715c1773-d230-4669-8b7f-7d2b5f137002.jpg" alt="Promo Choqz Shop">
+  </div>
+
+  <div class="pilih-game" id="pilih-game">
+    <div class="judul-section">1. Pilih Game</div>
+    <div class="game-list">
+      <div class="game-item" onclick="gantiGame('ff', this)">
+        <img src="https://cdn.phototourl.com/member/2026-04-13-bb7aca3a-f796-4a8c-b5a4-29e6cb8df3d2.jpg" alt="Free Fire">
+        <div>Free Fire</div>
+      </div>
+      <div class="game-item" onclick="gantiGame('ml', this)">
+        <img src="https://cdn.phototourl.com/member/2026-04-13-14fa06e5-3ed0-4db8-99d1-da96f90192d3.jpg" alt="Mobile Legends">
+        <div>Mobile Legends</div>
+      </div>
     </div>
-    <div class="banner-dots" id="bannerDots">
-      <span onclick="goToSlide(0)"></span><span onclick="goToSlide(1)"></span><span onclick="goToSlide(2)"></span>
+  </div>
+
+  <div id="step2" class="hide">
+    <div class="form" id="form-akun">
+      <div class="judul-section">2. Masukkan Data Akun</div>
+      <label id="labelId">ID Free Fire</label>
+      <input type="number" id="userId" placeholder="Masukkan ID Game">
+      <input type="number" id="serverId" placeholder="Server ID" class="hide">
     </div>
-  </div>
-</div>
 
-<h3>Hanya menyediakan!</h3>
+    <div class="judul-section" id="nominal-item">3. Pilih Nominal</div>
+    <div id="listFF" class="grid hide"></div>
+    <div id="listML" class="grid hide"></div>
 
-<div class="grid">
-  <div class="card" onclick="pilihGame('Free Fire')"><img src="https://iili.io/BEerBpI.md.jpg"><div>Free Fire<br><small>Garena</small></div></div>
-  <div class="card" onclick="pilihGame('Mobile Legends')"><img src="https://iili.io/BEkTlCQ.md.jpg"><div>Mobile Legends<br><small>Moonton</small></div></div>
-  <div class="card" onclick="pilihGame('Genshin Impact')"><img src="https://iili.io/BE8RKu9.md.jpg"><div>Genshin Impact<br><small>HoYoverse</small></div></div>
-  <div class="card" onclick="pilihGame('Honor of Kings')"><img src="https://iili.io/BEk6Bn9.md.jpg"><div>Honor of Kings<br><small>Tencent</small></div></div>
-</div>
-
-<div class="form-box" id="formTopup" style="display:none;">
-<h3 id="namaGame"></h3>
-<input type="text" id="uid" placeholder="Masukkan UID">
-<select id="item" onchange="hitungTotal()"></select>
-
-<h4 style="margin-top:20px; color:#ffcc00;">Pilih Pembayaran:</h4>
-<div class="payment-grid">
-  <div class="payment-item" onclick="pilihBayar('DANA', this)">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/1200px-Logo_dana_blue.svg.png">
-    <span>DANA</span>
-  </div>
-  <div class="payment-item" onclick="pilihBayar('OVO', this)">
-    <img src="https://iili.io/BWosHYB.th.jpg" alt="BWosHYB.th.jpg" border="0"></a>
-    <span>OVO</span>
-  </div>
-  <div class="payment-item" onclick="pilihBayar('GOPAY', this)">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Gopay_logo.svg/1200px-Gopay_logo.svg.png">
-    <span>GOPAY</span>
-  </div>
-  <div class="payment-item" onclick="pilihBayar('QRIS', this)">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo_QRIS.svg/1200px-Logo_QRIS.svg.png">
-    <span>QRIS</span>
-  </div>
-</div>
-
-<div class="total" id="total">Total: Rp0</div>
-<button onclick="kirimWA()">ORDER SEKARANG</button>
-</div>
-  
-<div id="notif"></div>
-</div>
-
-<div class="footer">
-  <div class="footer-text">
-    <div>
-      <h4>Layanan</h4>
-    Top up game terlaris, murah, aman legal 100% <br>
-    buka 24 Jam dengan pilihan payment 
-  </div>
-
-  <div class="footer-menu">
-    <div>
-      <h4>Petunjuk Situs</h4>
-      <p>Beranda</p><p>Masukan uid</p><p>Nominal Pembelian</p><p>Metode pembayaran</p><p>Hubungi Kami</p><p>Ulasan</p>
+    <div class="metode-bayar" id="metode-pembayaran">
+      <div class="judul-section">4. Pilih Metode Pembayaran</div>
+      <div class="metode-list">
+        <div class="metode-item" onclick="pilihBayar('qris', this)">
+          <img src="https://cdn.phototourl.com/member/2026-04-13-3d8caae6-445e-4a2d-9c13-491d66dc8d04.jpg" alt="QRIS">
+          <div>QRIS</div>
+        </div>
+        <div class="metode-item" onclick="pilihBayar('dana', this)">
+          <img src="https://cdn.phototourl.com/member/2026-04-13-913d468e-8dcc-4921-98d6-0b8712677fc5.jpg" alt="Dana">
+          <div>Dana</div>
+        </div>
+        <div class="metode-item" onclick="pilihBayar('gopay', this)">
+          <img src="https://cdn.phototourl.com/member/2026-04-13-f73b1367-db42-4c34-b0d7-cbbf83cc3b62.png" alt="Gopay">
+          <div>Gopay</div>
+        </div>
+      </div>
     </div>
-    <div><h4>Dukungan</h4><p>WhatsApp</p></div>
-  </div>
 
-  <div class="footer-menu">
-    <div><h4>Legalitas</h4><p>Kebijakan Pribadi</p><p>Syarat & Ketentuan</p></div>
+    <div id="qrisBox" class="qris-box hide">
+      <img src="https://cdn.phototourl.com/member/2026-04-13-db1615ed-347f-46b1-82e3-e98c80caa7df.jpg" alt="QRIS Choqz Shop" id="qrisImg">
+      <p><b>Scan QRIS di atas</b><br>Bayar sesuai total yang muncul di tombol.<br>Lalu klik tombol hijau buat konfirmasi via WA.</p>
+    </div>
+
+    <button class="bayar" id="btnBayar" onclick="kirimWA()" disabled>5. Bayar Sekarang</button>
   </div>
 </div>
 
-<script>
-/* SCRIPT MODAL (POP-UP) */
-function closePromo() {
-  if(document.getElementById("noShowAgain").checked) localStorage.setItem("hideChoqzPromo", "true");
-  document.getElementById("promoModal").style.display = "none";
-}
-window.onload = function() {
-  if(localStorage.getItem("hideChoqzPromo") === "true") document.getElementById("promoModal").style.display = "none";
-}
-
-/* SCRIPT PEMBAYARAN BARU */
-let metodeBayar = "";
-function pilihBayar(nama, el) {
-  metodeBayar = nama;
-  document.querySelectorAll('.payment-item').forEach(item => item.classList.remove('selected'));
-  el.classList.add('selected');
-}
-
-/* SCRIPT BANNER ASLI KAMU (TIDAK BERUBAH) */
-let indexBanner = 0;
-const trackBanner = document.getElementById("bannerTrack");
-const dotsBanner = document.getElementById("bannerDots").children;
-function showSlide() {
-  trackBanner.style.transform = "translateX(-" + (indexBanner * 100) + "%)";
-  for (let i = 0; i < dotsBanner.length; i++) dotsBanner[i].classList.remove("active");
-  dotsBanner[indexBanner].classList.add("active");
-}
-function nextSlide() { indexBanner = (indexBanner + 1) % 3; showSlide(); }
-function goToSlide(i) { indexBanner = i; showSlide(); }
-setInterval(nextSlide, 3000);
-showSlide();
-
-/* SCRIPT GAME ASLI KAMU (TIDAK BERUBAH) */
-let gameDipilih = "";
-let hargaList = {};
-function pilihGame(game) {
-  gameDipilih = game;
-  document.getElementById("formTopup").style.display = "block";
-  document.getElementById("namaGame").innerText = game;
-  let item = document.getElementById("item");
-  item.innerHTML = "";
-  if (game === "Free Fire") {
-    hargaList = {"Member Mingguan - Rp32.000":32000,"Member Bulanan - Rp92.000":92000,"BP Card -Rp46.000":46000,"5 DM - Rp1.000":1000,"12 DM - Rp2.000":2000,"30 DM - Rp5.800":5800,"50 DM - Rp7.800":7800,"70 DM - Rp10.000":10000,"80 DM - Rp11.600":11600,"100 DM - Rp16.000":16000,"140 DM - Rp19.000":19000,"355 DM - Rp50.000":50000,"720 DM - Rp100.000":100000,"7430 DM - Rp1.000.000":1000000,"73100 DM - Rp10.000.000":10000000};
-  } else if (game === "Mobile Legends") {
-    hargaList = {"86 DM - Rp20.000":20000,"172 DM - Rp38.000":38000};
-  } else {
-    hargaList = {"Paket 1 - Rp10.000":10000};
-  }
-  for (let key in hargaList) {
-    let opt = document.createElement("option");
-    opt.value = key; opt.text = key; item.appendChild(opt);
-  }
-  hitungTotal();
-}
-function hitungTotal() {
-  let item = document.getElementById("item").value;
-  let harga = hargaList[item] || 0;
-  document.getElementById("total").innerText = "Total: Rp" + harga.toLocaleString();
-}
-function kirimWA() {
-  if(!metodeBayar) { alert("Pilih pembayaran dulu bosku!"); return; }
-  let uid = document.getElementById("uid").value;
-  let item = document.getElementById("item").value;
-  let total = document.getElementById("total").innerText;
-  let text = `Halo ChoqzShop!\nSaya ingin top up:\n\nGame: ${gameDipilih}\nUID: ${uid}\nItem: ${item}\n${total}\nPembayaran: ${metodeBayar}`;
-  window.open("https://wa.me/6283126088118?text=" + encodeURIComponent(text));
-}
-</script>
-
-<a href="https://wa.me/62895425390197" target="_blank" class="wa-button">
-  <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png">
+<a href="https://wa.me/62895425390197?text=Halo%20min%20Choqz%20Shop%2C%20mau%20tanya%20dong" class="wa-float" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
 </a>
 
+<footer>
+  <div class="footer-group">
+    <div class="footer-title">Layanan</div>
+    <div class="footer-menu">
+      <a href="#top">Top Up Game</a>
+      <a href="#pilih-game">Pilih Game</a>
+      <a href="#nominal-item">Nominal Item</a>
+      <a href="#metode-pembayaran">Metode Pembayaran</a>
+      <a href="#btnBayar">Order</a>
+    </div>
+  </div>
+
+  <div class="footer-group">
+    <div class="footer-title">Petunjuk Situs</div>
+    <div class="footer-menu">
+      <a href="#pilih-game">Cara Pilih Game</a>
+      <a href="#form-akun">Cara Isi ID</a>
+      <a href="#nominal-item">Cara Pilih Nominal</a>
+    </div>
+  </div>
+
+  <div class="footer-group">
+    <div class="footer-title">Dukungan</div>
+    <div class="footer-menu">
+      <a href="https://wa.me/62895425390197" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="footer-group">
+    <div class="footer-title">Legalitas</div>
+    <div class="footer-menu">
+      <a href="#">Pribadi</a>
+      <a href="#">Privasi</a>
+    </div>
+  </div>
+
+  <div class="copyright">
+    © 2026 Choqz Shop. All Rights Reserved.
+  </div>
+</footer>
+
+<script>
+const wa = "62895425390197";
+const qrisUrl = "https://cdn.phototourl.com/member/2026-04-13-db1615ed-347f-46b1-82e3-e98c80caa7df.jpg";
+
+const dataFF = [
+  { dm: "Member Mingguan", harga: 32000, tag: "HEMAT", logo: "" },
+  { dm: "Member Bulanan", harga: 92000, tag: "HEMAT", logo: "" },
+  { dm: "BP Card", harga: 52000, tag: "EVENT", logo: "" },
+  { dm: 5, harga: 1500 },
+  { dm: 12, harga: 3000 },
+  { dm: 50, harga: 8000 },
+  { dm: 70, harga: 10000 },
+  { dm: 140, harga: 19000 },
+  { dm: 355, harga: 47000 },
+  { dm: 720, harga: 93000 },
+  { dm: 1450, harga: 185000 },
+  { dm: 2180, harga: 277000 },
+  { dm: 3640, harga: 462000 }
+];
+
+const dataML = [
+  { dm: 5, harga: 1500 },
+  { dm: 11, harga: 3000 },
+  { dm: 56, harga: 13000 },
+  { dm: 112, harga: 25000 },
+  { dm: 223, harga: 50000 },
+  { dm: 336, harga: 75000 },
+  { dm: 570, harga: 125000 },
+  { dm: 1163, harga: 250000 },
+  { dm: 2398, harga: 500000 },
+  { dm: 6042, harga: 1250000 }
+];
+
+let game = null;
+let pilih = null;
+let bayar = null;
+
+document.getElementById('qrisImg').src = qrisUrl;
+
+function buatGrid() {
+  const listFF = document.getElementById('listFF');
+  const listML = document.getElementById('listML');
+
+  dataFF.forEach((v,i) => {
+    let tagHtml = v.tag? `<div class="tag">${v.tag}</div>` : '';
+    let logoHtml = v.logo? `<img src="${v.logo}" class="logo-item">` : '';
+    let dmText = typeof v.dm === 'number'? `💎 ${v.dm}` : v.dm;
+    listFF.innerHTML += `
+      <div class="item" onclick="pilihItem('ff', ${i})">
+        ${tagHtml}
+        ${logoHtml}
+        <div class="nominal">${dmText}</div>
+        <div class="harga">Rp ${v.harga.toLocaleString('id-ID')}</div>
+      </div>`;
+  });
+
+  dataML.forEach((v,i) => {
+    listML.innerHTML += `
+      <div class="item" onclick="pilihItem('ml', ${i})">
+        <div class="nominal">💎 ${v.dm}</div>
+        <div class="harga">Rp ${v.harga.toLocaleString('id-ID')}</div>
+      </div>`;
+  });
+}
+
+function gantiGame(jenis, el) {
+  game = jenis;
+  pilih = null;
+  bayar = null;
+
+  document.getElementById('banner').classList.add('hide');
+  document.getElementById('qrisBox').classList.add('hide');
+
+  document.querySelectorAll('.game-item').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+
+  document.getElementById('step2').classList.remove('hide');
+
+  const listFF = document.getElementById('listFF');
+  const listML = document.getElementById('listML');
+  const serverId = document.getElementById('serverId');
+  const labelId = document.getElementById('labelId');
+
+  if(jenis === 'ff') {
+    listFF.classList.remove('hide');
+    listML.classList.add('hide');
+    labelId.innerText = 'ID Free Fire';
+    serverId.classList.add('hide');
+  } else {
+    listFF.classList.add('hide');
+    listML.classList.remove('hide');
+    labelId.innerText = 'ID Mobile Legends';
+    serverId.classList.remove('hide');
+  }
+
+  document.querySelectorAll('.grid.item').forEach(i => i.classList.remove('active'));
+  document.querySelectorAll('.metode-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('userId').value = '';
+  document.getElementById('serverId').value = '';
+  cekTombol();
+}
+
+function pilihItem(jenis, index) {
+  if(jenis!== game) return;
+  pilih = jenis === 'ff'? dataFF[index] : dataML[index];
+
+  const gridAktif = document.getElementById(jenis === 'ff'? 'listFF' : 'listML');
+  gridAktif.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
+  event.target.closest('.item').classList.add('active');
+
+  cekTombol();
+}
+
+function pilihBayar(jenis, el) {
+  bayar = jenis;
+  document.querySelectorAll('.metode-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+
+  const qrisBox = document.getElementById('qrisBox');
+  if(jenis === 'qris') {
+    qrisBox.classList.remove('hide');
+  } else {
+    qrisBox.classList.add('hide');
+  }
+
+  cekTombol();
+}
+
+function cekTombol() {
+  const btn = document.getElementById('btnBayar');
+  if(game && pilih && bayar) {
+    btn.disabled = false;
+    btn.innerText = `Bayar Rp ${pilih.harga.toLocaleString('id-ID')} via ${bayar.toUpperCase()}`;
+  } else {
+    btn.disabled = true;
+    btn.innerText = '5. Lengkapi Data Dulu';
+  }
+}
+
+function kirimWA() {
+  const id = document.getElementById('userId').value;
+  const server = document.getElementById('serverId').value;
+
+  if(!id) { alert('Isi ID Game dulu'); return; }
+  if(game === 'ml' &&!server) { alert('Isi Server ID ML'); return; }
+  if(!pilih) { alert('Pilih nominal DM dulu'); return; }
+  if(!bayar) { alert('Pilih metode bayar dulu'); return; }
+
+  let dmText = typeof pilih.dm === 'number'? `💎 ${pilih.dm}` : pilih.dm;
+  let pesan = `Halo Choqz Shop, saya mau order:%0A`;
+  pesan += `Game: ${game === 'ff'? 'Free Fire' : 'Mobile Legends'}%0A`;
+  pesan += `ID: ${id}`;
+  if(game === 'ml') pesan += ` (${server})`;
+  pesan += `%0AItem: ${dmText}%0A`;
+  pesan += `Total: Rp ${pilih.harga.toLocaleString('id-ID')}%0A`;
+  pesan += `Bayar via: ${bayar.toUpperCase()}%0A%0A`;
+  pesan += `Mohon diproses ya min`;
+
+  window.open(`https://wa.me/${wa}?text=${pesan}`, '_blank');
+}
+
+buatGrid();
+</script>
 </body>
-  </html>
+</html>
