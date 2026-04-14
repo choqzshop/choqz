@@ -108,7 +108,17 @@
     width: 100%; max-width: 280px; border-radius: 8px; margin-bottom: 12px;
   }
 .qris-box p {
-    font-size: 13px; opacity:.8; line-height: 1.5;
+    font-size: 13px; opacity:.8; line-height: 1.5; margin-bottom: 8px;
+  }
+.qris-timer {
+    background: #FF3B301A; border: 1px solid #FF3B30; border-radius: 6px;
+    padding: 8px; font-size: 12px; color: #FF3B30; font-weight: 600;
+    margin-bottom: 12px;
+  }
+.qris-timer span { color: #fff; }
+.btn-sudah-bayar {
+    width: 100%; padding: 14px; background: #25D366; border: none;
+    color: #000; font-weight: bold; border-radius: 8px; font-size: 15px; cursor: pointer;
   }
 
 .bayar {
@@ -130,6 +140,45 @@
 @keyframes pulse {
     0%, 100% { box-shadow: 0 4px 12px rgba(37,211,102,0.4); }
     50% { box-shadow: 0 4px 20px rgba(37,211,102,0.7); }
+  }
+
+  /* POPUP KONFIRMASI */
+.modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1000;
+    opacity: 0; pointer-events: none; transition:.3s;
+    display: flex; align-items: center; justify-content: center; padding: 16px;
+  }
+.modal-overlay.show { opacity: 1; pointer-events: auto; }
+.modal {
+    background: #1a1a2e; border-radius: 12px; width: 100%; max-width: 400px;
+    border: 1px solid #2a2a4a; transform: scale(0.9); transition:.3s;
+  }
+.modal-overlay.show.modal { transform: scale(1); }
+.modal-header {
+    padding: 16px; border-bottom: 1px solid #2a2a4a; font-weight: bold; font-size: 16px;
+    text-align: center; color: #9d4edd;
+  }
+.modal-body { padding: 16px; }
+.modal-row {
+    display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px;
+  }
+.modal-row span:first-child { opacity:.7; }
+.modal-row span:last-child { font-weight: 600; text-align: right; }
+.modal-total {
+    border-top: 1px solid #2a2a4a; padding-top: 12px; margin-top: 12px;
+    font-size: 16px; font-weight: bold;
+  }
+.modal-total span:last-child { color: #25D366; }
+.modal-footer {
+    padding: 16px; border-top: 1px solid #2a2a4a; display: flex; gap: 10px;
+  }
+.btn-batal {
+    flex: 1; padding: 12px; background: #2a2a4a; color: #fff;
+    border: none; border-radius: 8px; font-weight: 600; cursor: pointer;
+  }
+.btn-konfirmasi {
+    flex: 1; padding: 12px; background: #25D366; color: #000;
+    border: none; border-radius: 8px; font-weight: 600; cursor: pointer;
   }
 
 footer {
@@ -211,12 +260,27 @@ footer {
       </div>
     </div>
 
+    <!-- QRIS BOX PINDAH KE SINI, MUNCUL SETELAH KONFIRMASI -->
     <div id="qrisBox" class="qris-box hide">
       <img src="https://cdn.phototourl.com/member/2026-04-13-db1615ed-347f-46b1-82e3-e98c80caa7df.jpg" alt="QRIS Choqz Shop" id="qrisImg">
-      <p><b>Scan QRIS di atas</b><br>Bayar sesuai total yang muncul di tombol.<br>Lalu klik tombol hijau buat konfirmasi via WA.</p>
+      <p><b>Scan QRIS di atas untuk bayar</b><br>Total: <span id="qrisTotal"></span></p>
+      <div class="qris-timer" id="qrisTimer">⏰ Berlaku 24 jam</div>
+      <button class="btn-sudah-bayar" onclick="sudahBayar()">Saya Sudah Bayar</button>
     </div>
 
-    <button class="bayar" id="btnBayar" onclick="kirimWA()" disabled>5. Bayar Sekarang</button>
+    <button class="bayar" id="btnBayar" onclick="tampilKonfirmasi()" disabled>5. Bayar Sekarang</button>
+  </div>
+</div>
+
+<!-- POPUP KONFIRMASI -->
+<div class="modal-overlay" id="modalKonfirmasi">
+  <div class="modal">
+    <div class="modal-header">Konfirmasi Pesanan</div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <button class="btn-batal" onclick="tutupKonfirmasi()">Batal</button>
+      <button class="btn-konfirmasi" onclick="prosesKonfirmasi()">Konfirmasi</button>
+    </div>
   </div>
 </div>
 
@@ -301,6 +365,7 @@ const dataML = [
 let game = null;
 let pilih = null;
 let bayar = null;
+let qrisTimerInterval = null;
 
 document.getElementById('qrisImg').src = qrisUrl;
 
@@ -337,6 +402,7 @@ function gantiGame(jenis, el) {
 
   document.getElementById('banner').classList.add('hide');
   document.getElementById('qrisBox').classList.add('hide');
+  clearInterval(qrisTimerInterval);
 
   document.querySelectorAll('.game-item').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
@@ -383,14 +449,40 @@ function pilihBayar(jenis, el) {
   document.querySelectorAll('.metode-item').forEach(i => i.classList.remove('active'));
   el.classList.add('active');
 
-  const qrisBox = document.getElementById('qrisBox');
-  if(jenis === 'qris') {
-    qrisBox.classList.remove('hide');
-  } else {
-    qrisBox.classList.add('hide');
-  }
+  // QRIS GA MUNCUL DISINI LAGI
+  document.getElementById('qrisBox').classList.add('hide');
+  clearInterval(qrisTimerInterval);
 
   cekTombol();
+}
+
+function startQrisTimer() {
+  clearInterval(qrisTimerInterval);
+
+  const now = new Date();
+  const besok = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+  function updateTimer() {
+    const sisa = besok - new Date();
+    if(sisa <= 0) {
+      document.getElementById('qrisTimer').innerHTML = '⏰ QRIS Kadaluarsa';
+      clearInterval(qrisTimerInterval);
+      return;
+    }
+
+    const jam = Math.floor(sisa / 1000 / 60 / 60);
+    const menit = Math.floor(sisa / 1000 / 60) % 60;
+    const detik = Math.floor(sisa / 1000) % 60;
+
+    const jamBesok = String(besok.getHours()).padStart(2, '0');
+    const menitBesok = String(besok.getMinutes()).padStart(2, '0');
+
+    document.getElementById('qrisTimer').innerHTML =
+      `⏰ Berlaku sampai besok <span>${jamBesok}:${menitBesok}</span> | Sisa: ${jam}j ${menit}m ${detik}d`;
+  }
+
+  updateTimer();
+  qrisTimerInterval = setInterval(updateTimer, 1000);
 }
 
 function cekTombol() {
@@ -404,7 +496,7 @@ function cekTombol() {
   }
 }
 
-function kirimWA() {
+function tampilKonfirmasi() {
   const id = document.getElementById('userId').value;
   const server = document.getElementById('serverId').value;
 
@@ -414,6 +506,64 @@ function kirimWA() {
   if(!bayar) { alert('Pilih metode bayar dulu'); return; }
 
   let dmText = typeof pilih.dm === 'number'? `💎 ${pilih.dm}` : pilih.dm;
+  let idText = id + (game === 'ml'? ` (${server})` : '');
+
+  const body = document.getElementById('modalBody');
+  body.innerHTML = `
+    <div class="modal-row">
+      <span>Game</span>
+      <span>${game === 'ff'? 'Free Fire' : 'Mobile Legends'}</span>
+    </div>
+    <div class="modal-row">
+      <span>ID Akun</span>
+      <span>${idText}</span>
+    </div>
+    <div class="modal-row">
+      <span>Item</span>
+      <span>${dmText}</span>
+    </div>
+    <div class="modal-row">
+      <span>Pembayaran</span>
+      <span>${bayar.toUpperCase()}</span>
+    </div>
+    <div class="modal-row modal-total">
+      <span>Total Bayar</span>
+      <span>Rp ${pilih.harga.toLocaleString('id-ID')}</span>
+    </div>
+  `;
+
+  document.getElementById('modalKonfirmasi').classList.add('show');
+}
+
+function tutupKonfirmasi() {
+  document.getElementById('modalKonfirmasi').classList.remove('show');
+}
+
+function prosesKonfirmasi() {
+  tutupKonfirmasi();
+
+  // KALO QRIS, TAMPILIN QRIS + TIMER
+  if(bayar === 'qris') {
+    document.getElementById('qrisTotal').innerText = `Rp ${pilih.harga.toLocaleString('id-ID')}`;
+    document.getElementById('qrisBox').classList.remove('hide');
+    document.getElementById('btnBayar').classList.add('hide');
+    startQrisTimer();
+    window.scrollTo({ top: document.getElementById('qrisBox').offsetTop - 100, behavior: 'smooth' });
+  } else {
+    // KALO DANA/GOPAY LANGSUNG KE WA
+    kirimWA();
+  }
+}
+
+function sudahBayar() {
+  kirimWA();
+}
+
+function kirimWA() {
+  const id = document.getElementById('userId').value;
+  const server = document.getElementById('serverId').value;
+
+  let dmText = typeof pilih.dm === 'number'? `💎 ${pilih.dm}` : pilih.dm;
   let pesan = `Halo Choqz Shop, saya mau order:%0A`;
   pesan += `Game: ${game === 'ff'? 'Free Fire' : 'Mobile Legends'}%0A`;
   pesan += `ID: ${id}`;
@@ -421,6 +571,7 @@ function kirimWA() {
   pesan += `%0AItem: ${dmText}%0A`;
   pesan += `Total: Rp ${pilih.harga.toLocaleString('id-ID')}%0A`;
   pesan += `Bayar via: ${bayar.toUpperCase()}%0A%0A`;
+  if(bayar === 'qris') pesan += `Sudah transfer via QRIS%0A%0A`;
   pesan += `Mohon diproses ya min`;
 
   window.open(`https://wa.me/${wa}?text=${pesan}`, '_blank');
@@ -429,4 +580,4 @@ function kirimWA() {
 buatGrid();
 </script>
 </body>
-</html>
+     </html>
